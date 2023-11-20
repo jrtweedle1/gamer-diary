@@ -1,5 +1,8 @@
+package models;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
 //@Document annotation to specify the collection
 @Document(collection="sections")
@@ -12,9 +15,9 @@ public class Section {
     private String sectionContent;
 
     //constructor
-    public Diary(String sectionTitle, String sectionContent) {
+    public Section(String sectionTitle, String sectionContent) {
         this.sectionTitle = sectionTitle;
-        this.initialProgress = initialProgress;
+        this.sectionContent = sectionContent;
     }
 
     //getters and setters
@@ -36,9 +39,9 @@ public class Section {
 
     //sectionContent
     public String getSectionContent() {
-        return sectionContent
+        return sectionContent;
     }
-    public voice setSectionContent(String sectionContent) {
-        this.sectionContent = sectionContent
+    public void setSectionContent(String sectionContent) {
+        this.sectionContent = sectionContent;
     }
 }
