@@ -12,6 +12,11 @@ Resources I used to complete the project.
 
 ## Technologies
 What technologies my project uses.
+React with React Router
+React Bootstrap
+Java
+Spring Boot (Maven)
+MongoDB
 
 ## License
 What license this project uses.
