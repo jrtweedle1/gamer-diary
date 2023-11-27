@@ -1,24 +1,65 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
+import React, {useState} from "react";
+import { useHistory } from 'react-router-dom'
 
 function SignUp() {
+    const history = useHistory();
+    const url = 'api'
+
+    const [signUpData, setSignUpData] = useState({
+        username: '',
+        password: '',
+        email: ''
+    })
+
+    const handleInput = (e) => {
+        setSignUpData({
+            ...signUpData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        //prevents page from refreshing
+        e.preventDefault();
+        try {
+            const response = await fetch(`${url}/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(signUpData)
+            })
+            console.log(response)
+            if (response.ok) {
+                const result = await response.text()
+                if (result === 'Dashboard') {
+                    history.push('/dashboard')
+                }
+            }
+        } catch (error) {
+            console.error("User failed to be created", error.message)
+        }
+    }
+
     return (
         <div>
             <h1>QuestLog</h1>
             <h2>A progress diary for gamers everywhere</h2>
             <h3>Sign up now!</h3>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicUsername">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="username" placeholder="Enter username" />
+                    <Form.Control name="username" type="username" placeholder="Enter username" value={signUpData.username} onChange={handleInput}/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control name="password" type="password" placeholder="Password" value={signUpData.password} onChange={handleInput}/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control name="email" type="email" placeholder="Enter email" value={signUpData.email} onChange={handleInput}/>
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
