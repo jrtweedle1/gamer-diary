@@ -1,8 +1,11 @@
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import React, {useState} from "react";
+import { useHistory } from 'react-router-dom'
 
 function SignUp() {
+    const history = useHistory();
+    const url = 'api'
 
     const [signUpData, setSignUpData] = useState({
         username: '',
@@ -21,20 +24,22 @@ function SignUp() {
         //prevents page from refreshing
         e.preventDefault();
         try {
-            const response = await fetch('/signup', {
+            const response = await fetch(`${url}/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(signUpData)
             })
-
+            console.log(response)
             if (response.ok) {
-                const result = await response.json();
-                console.log(result)
+                const result = await response.text()
+                if (result === 'Dashboard') {
+                    history.push('/dashboard')
+                }
             }
-        } catch {
-            console.error("User failed to be created.")
+        } catch (error) {
+            console.error("User failed to be created", error.message)
         }
     }
 

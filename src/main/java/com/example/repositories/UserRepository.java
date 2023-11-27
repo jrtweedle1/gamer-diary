@@ -9,4 +9,5 @@ import com.example.models.User;
 //for User entities, ID type is String
 public interface UserRepository extends MongoRepository<User, String> {
     // insert custom query methods
+    User findByUsername(String username);
 }
