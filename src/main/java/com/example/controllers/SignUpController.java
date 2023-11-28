@@ -24,7 +24,7 @@ public class SignUpController {
 
         try {
             User savedUser = userRepository.save(user);
-            return ResponseEntity.ok("Dashboard");
+            return ResponseEntity.ok(savedUser);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging purposes
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create user. Please try again.");

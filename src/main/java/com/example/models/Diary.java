@@ -14,6 +14,10 @@ public class Diary {
     private String gameTitle;
     private List<String> sectionIds;
 
+    // default no-argument constructor
+    public Diary() {
+    }
+
     //constructor
     public Diary(String gameTitle) {
         this.gameTitle = gameTitle;

@@ -3,25 +3,14 @@ import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 
-function Dashboard () {
+function Diary () {
     const url = 'api'
     const navigate = useNavigate();
-
-    const [diaryData, setDiaryData] = useState({
-        gameTitle: ''
-    })
 
     const [sectionData, setSectionData] = useState({
         sectionTitle: '',
         sectionContent: ''
     })
-
-    const handleDiaryInput = (e) => {
-        setDiaryData({
-            ...diaryData,
-            [e.target.name]: e.target.value
-        })
-    }
 
     const handleSectionInput = (e) => {
         setSectionData({
@@ -34,13 +23,6 @@ function Dashboard () {
         //prevents page from refreshing
         e.preventDefault();
         try {
-            const diaryResponse = await fetch(`${url}/diary`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(diaryData)
-            })
             const sectionResponse = await fetch(`${url}/section`, {
                 method: 'POST',
                 headers: {
@@ -48,13 +30,11 @@ function Dashboard () {
                 },
                 body: JSON.stringify(sectionData)
             })
-            if (diaryResponse.ok && sectionResponse.ok) {
-                const diaryResult = await diaryResponse.json()
-                console.log('diaryResult', diaryResult)
+            if (sectionResponse.ok) {
                 const sectionResult = await sectionResponse.json()
                 console.log('sectionResult', sectionResult)
                 const diaryId = diaryResult.id;
-                navigate(`/diary/${diaryId}`)
+                //INSERT REFRESH HERE
             }
         } catch (error) {
             console.error("Diary and initial section failed to be created", error.message)
@@ -63,12 +43,8 @@ function Dashboard () {
 
     return(
         <>
-            <div><h1>Dashboard</h1></div>
+            <div><h1>INSERT DIARY NAME HERE</h1></div>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicGameTitle">
-                    <Form.Label>Game Title</Form.Label>
-                    <Form.Control name="gameTitle" type="gameTitle" placeholder="Enter game title" value={diaryData.gameTitle} onChange={handleDiaryInput}/>
-                </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicSectionTitle">
                     <Form.Label>Section Title</Form.Label>
                     <Form.Control name="sectionTitle" type="sectionTitle" placeholder="Enter section title" value={sectionData.sectionTitle} onChange={handleSectionInput}/>
