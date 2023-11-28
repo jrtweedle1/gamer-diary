@@ -1,11 +1,11 @@
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import { useHistory } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom';
 
-function SignUp() {
-    const history = useHistory();
+function SignUp(props) {
     const url = 'api'
+    const navigate = useNavigate();
 
     const [signUpData, setSignUpData] = useState({
         username: '',
@@ -33,10 +33,9 @@ function SignUp() {
             })
             console.log(response)
             if (response.ok) {
-                const result = await response.text()
-                if (result === 'Dashboard') {
-                    history.push('/dashboard')
-                }
+                navigate('/dashboard');
+                const result = await response.json();
+                console.log('result', result)
             }
         } catch (error) {
             console.error("User failed to be created", error.message)
