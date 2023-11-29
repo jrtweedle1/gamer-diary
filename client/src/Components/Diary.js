@@ -1,11 +1,13 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React, {useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Diary () {
     const url = 'api'
     const navigate = useNavigate();
+    const { diaryId } = useParams();
+
 
     const [sectionData, setSectionData] = useState({
         sectionTitle: '',

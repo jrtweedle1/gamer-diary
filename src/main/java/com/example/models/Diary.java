@@ -3,6 +3,7 @@ package com.example.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
+import java.util.ArrayList;
 
 //@Document annotation to specify the collection
 @Document(collection="diaries")
@@ -12,7 +13,7 @@ public class Diary {
     @Id
     private String id;
     private String gameTitle;
-    private List<String> sectionIds;
+    private List<String> sections;
 
     // default no-argument constructor
     public Diary() {
@@ -38,5 +39,13 @@ public class Diary {
     }
     public void setGameTitle(String gameTitle) {
         this.gameTitle = gameTitle;
+    }
+
+    public List<String> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<String> sections) {
+        this.sections = sections;
     }
 }
