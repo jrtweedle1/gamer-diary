@@ -4,10 +4,11 @@ package com.example.repositories;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import com.example.models.User;
+import org.bson.types.ObjectId;
 
 @Repository
-//for User entities, ID type is String
-public interface UserRepository extends MongoRepository<User, String> {
+//for User entities, ID type is ObjectId
+public interface UserRepository extends MongoRepository<User, ObjectId> {
     // insert custom query methods
     User findByUsername(String username);
 }

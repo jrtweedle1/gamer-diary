@@ -1,16 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import React, {useState} from "react";
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, {useState, useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
 
 function SignUp(props) {
     const url = 'api'
     const navigate = useNavigate();
+    let token;
 
     const [signUpData, setSignUpData] = useState({
         username: '',
         password: '',
-        email: ''
+        email: '',
+        token: ''
     })
 
     const handleInput = (e) => {
@@ -27,15 +29,17 @@ function SignUp(props) {
             const response = await fetch(`${url}/signup`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify(signUpData)
             })
             console.log(response)
             if (response.ok) {
-                navigate('/dashboard');
                 const result = await response.json();
-                console.log('result', result)
+                localStorage.setItem('userInfo', JSON.stringify(result))
+                console.log(result)
+                navigate('/dashboard');
             }
         } catch (error) {
             console.error("User failed to be created", error.message)

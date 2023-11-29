@@ -34,10 +34,18 @@ function Dashboard () {
         //prevents page from refreshing
         e.preventDefault();
         try {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            const token = userInfo.token;
+            console.log(token)
+            // if (!userId) {
+            //     console.error('User ID not found in localStorage');
+            //     return;
+            // }
             const diaryResponse = await fetch(`${url}/diary`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(diaryData)
             })
