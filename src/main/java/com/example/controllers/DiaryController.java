@@ -35,6 +35,7 @@ public class DiaryController {
             @RequestBody Diary diary) {
         try {
             String userIdString = jwtUtil.extractUserId(authorizationHeader);
+            diary.setSections(new ArrayList<>());
             Diary savedDiary = diaryRepository.save(diary);
             ObjectId userId = new ObjectId(userIdString);
             User user = userRepository.findById(userId).orElse(null);
@@ -49,7 +50,7 @@ public class DiaryController {
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User is null");
             }
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(savedDiary);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create diary. Please try again.");

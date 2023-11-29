@@ -49,20 +49,29 @@ function Dashboard () {
                 },
                 body: JSON.stringify(diaryData)
             })
-            const sectionResponse = await fetch(`${url}/section`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(sectionData)
-            })
-            if (diaryResponse.ok && sectionResponse.ok) {
+
+            if (diaryResponse.ok) {
                 const diaryResult = await diaryResponse.json()
                 console.log('diaryResult', diaryResult)
-                const sectionResult = await sectionResponse.json()
-                console.log('sectionResult', sectionResult)
                 const diaryId = diaryResult.id;
-                navigate(`/diary/${diaryId}`)
+
+                const sectionDataWithDiaryId = {
+                    ...sectionData,
+                    diaryId: diaryId
+                };
+                const sectionResponse = await fetch(`${url}/section`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(sectionDataWithDiaryId) // Send section data with diaryId
+                });
+                if (sectionResponse.ok) {
+                    const sectionResult = await sectionResponse.json()
+                    console.log('sectionResult', sectionResult)
+                    navigate(`/diary/${diaryId}`)
+                }
+
             }
         } catch (error) {
             console.error("Diary and initial section failed to be created", error.message)
