@@ -14,6 +14,8 @@ import com.example.security.UserService;
 import com.example.models.UserToken;
 import com.example.security.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
+import java.util.HashMap;
 
 @RestController
 @CrossOrigin
@@ -37,14 +39,15 @@ public class SignUpController {
             return ResponseEntity.badRequest().body("Username already exists");
         }
         try {
-            ObjectId id = new ObjectId();
-            user.setId(id);
             User savedUser = userRepository.save(user);
             String stringId = savedUser.getId().toString();
             String token = userService.generateToken(stringId);
             savedUser.setToken(token);
             savedUser = userRepository.save(savedUser);
-            return ResponseEntity.ok(savedUser);
+            Map<String, Object> response = new HashMap<>();
+            response.put("infoUser", savedUser);
+            response.put("userId", stringId);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging purposes
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create user. Please try again.");
