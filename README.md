@@ -40,6 +40,3 @@ React Bootstrap
 Java
 Spring Boot (Maven)
 MongoDB
-
-## License
-What license this project uses.
