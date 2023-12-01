@@ -32,9 +32,7 @@ QuestLog is a video game diary for gamers to record their progress in various ga
    cd Client
    npm run start
    ```
-## Credits
-Resources I used to complete the project.
-
+   
 ## Technologies
 What technologies my project uses.
 React with React Router
