@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
 import com.example.models.Section;
 import com.example.repositories.SectionRepository;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class UserController {
 

@@ -6,6 +6,7 @@ import DiarySection from "./DiarySection";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
 
 function Diary () {
     const url = 'api'
@@ -13,6 +14,43 @@ function Diary () {
     const { diaryId } = useParams();
     const [diary, setDiary] = useState(null);
     const [sections, setSections] = useState([]);
+    const [show, setShow] = useState(false);
+    const [sectionToDelete, setSectionToDelete] = useState(null);
+
+    const deleteSection = async (sectionId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/section/${sectionId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                console.log(response)
+                setSections(sections.filter(section => {
+                    return section.id !== sectionId
+                }))
+                await fetchSectionsForDiary();
+                setSectionToDelete(null);
+                handleClose();
+            } else {
+                console.error('Failed to delete diary:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Failed to delete diaries:', error.message);
+        }
+    }
+
+    const handleClose = () => setShow(false);
+
+    const handleShow = (sectionId) => {
+        setSectionToDelete(sectionId);
+        setShow(true);
+    }
+    const handleSectionDelete = (sectionId) => {
+        setSectionToDelete(sectionId);
+    }
 
     const fetchSectionsForDiary = async () => {
         try {
@@ -78,38 +116,41 @@ function Diary () {
         }
     }
 
-    return(
+    return (
         <>
-            <div><h1 className="text-center">{diary ? diary.gameTitle : 'Loading diary...'}</h1></div>
-            <Container fluid>
+            <div><h1 className="text-center heading">{diary ? diary.gameTitle : 'Loading diary...'}</h1></div>
+            <Container>
                 <Row>
                     <Col sm={4}>
                         <Container>
                             <Row className="d-flex justify-content-center">
-                                <Col md="auto" className="d-flex justify-content-center">
-                                    <div>
+                                <Col md="auto" className="d-flex justify-content-center flex-column">
+                                    <div id="signup-background">
                                         <h2 className="text-center">Add New Section</h2>
                                         <Form onSubmit={handleSubmit}>
                                             <Form.Group className="mb-3" controlId="formBasicSectionTitle">
                                                 <Form.Label>Section Title</Form.Label>
                                                 <Form.Control name="sectionTitle" type="sectionTitle" placeholder="Enter section title" value={sectionData.sectionTitle} onChange={handleSectionInput}/>
                                             </Form.Group>
-                                            <Form.Text className="text-muted">
-                                                Consider titling your first section "Current Progress".
+                                            <Form.Text className="text-muted white">
+                                                Suggested Sections: Quests, Items, Current Party, Notes
                                             </Form.Text>
                                             <Form.Group className="mb-3" controlId="formBasicSectionContent">
                                                 <Form.Label>Section Content</Form.Label>
-                                                <Form.Control name="sectionContent" type="sectionContent" placeholder="Enter section content" value={sectionData.sectionContent} onChange={handleSectionInput}/>
-                                                <Form.Text className="text-muted">
-                                                    Consider writing a little bit about where you last left off in your game.
-                                                </Form.Text>
+                                                <Form.Control as="textarea" className="text-height" name="sectionContent" type="sectionContent" placeholder="Enter section content" value={sectionData.sectionContent} onChange={handleSectionInput}/>
                                             </Form.Group>
                                             <div className="d-flex justify-content-center">
-                                                <Button variant="primary" type="submit">
-                                                    New Diary
+                                                <Button variant="outline-light" type="submit">
+                                                    Submit
                                                 </Button>
                                             </div>
                                         </Form>
+                                    </div>
+                                    <p></p>
+                                    <p></p>
+                                    <p></p>
+                                    <div className="d-flex justify-content-center" >
+                                        <Button size="lg" href="/dashboard">Back to Dashboard</Button>
                                     </div>
                                 </Col>
                             </Row>
@@ -118,12 +159,28 @@ function Diary () {
                     <Col sm={8}>
                         <Container>
                             {sections.map((section) => (
-                                <DiarySection key={section.id} sectionData={section} />
+                                <DiarySection
+                                    handleShow={() => handleShow(section.id)} key={section.id} sectionData={section} deleteSection={deleteSection} />
                             ))}
                         </Container>
                     </Col>
                 </Row>
             </Container>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete this section?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>This action cannot be undone. Please press the "Confirm Delete" button if you would like to continue with deletion. </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="danger" onClick={() => deleteSection(sectionToDelete)}>
+                        Confirm Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 

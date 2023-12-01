@@ -1,17 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Press+Start+2P&family=Russo+One&family=Saira:wght@100;700&display=swap');
 
 .App {
   text-align: center;
 }
 
-h1 {
-  padding: 4vh;
-  font-family: 'Press Start 2P';
-  font-size: 5vh;
+html, body, #root {
+  height: 100%
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  background-image: url("https://images.pexels.com/photos/3812048/pexels-photo-3812048.jpeg");
+  background-size:cover;
+}
+
+.heading {
+   padding-bottom: 4vh;
+}
+
+h1 {
+  padding-top: 4vh;
+  font-family: 'Press Start 2P';
+  font-size: 7vh;
+  color: white;
+}
+
+h2 {
+  font-family: Russo One;
+  color: white;
+  font-size: 4vh !important;
+}
+
+h3, .white, p {
+  color: white !important;
+}
+
+p {
+  font-size: 20px;
+}
+
+.russo{
+  font-family: Russo One;
+  font-size: 20px;
+}
+
+.sections {
+  margin-bottom: 10px;
+}
+
+#signUp-div {
+  height: 100%;
+}
+
+#signup-background {
+  padding: 25px;
+  background: rgb(31, 29, 29, .9);
+  border-radius: 30px;
+}
+
+#form-container, #form-row {
+  height: 100% !important;
+}
+
+.text-height {
+  height: 250px;
+}
+
+.small-button {
+  max-width: 60px;
+  margin-right: 10px;
+}
+
+#tagline {
+  padding-bottom: 10vh;
+}
+
+@keyframes move {
+  to { transform: translateX(-100%); }
 }

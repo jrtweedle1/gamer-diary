@@ -52,33 +52,37 @@ function SignUp(props) {
     }
 
     return (
-        <div>
+        <div id="signUp-div">
             <h1 className="text-center">QuestLog</h1>
-            <h2 className="text-center">A progress diary for gamers everywhere</h2>
-            <Container>
-                <Row className="justify-content-md-center">
+            <h2 className="text-center" id="tagline">A progress diary for gamers everywhere</h2>
+            <Container id="form-container">
+                <Row className="d-flex justify-content-md-center" id="form-row">
                     <Col sm={6}>
-                        <h3 className="text-center">Sign up now!</h3>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group className="mb-3" controlId="formBasicUsername">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control name="username" type="username" placeholder="Enter username" value={signUpData.username} onChange={handleInput}/>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control name="password" type="password" placeholder="Password" value={signUpData.password} onChange={handleInput}/>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control name="email" type="email" placeholder="Enter email" value={signUpData.email} onChange={handleInput}/>
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text>
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Submit
-                            </Button>
-                        </Form>
+                        <div className="align-items-center" id="signup-background">
+                            <h3 className="text-center">Sign up now!</h3>
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group className="mb-3" controlId="formBasicUsername">
+                                    <Form.Label className="white">Username</Form.Label>
+                                    <Form.Control name="username" type="username" placeholder="Enter username" value={signUpData.username} onChange={handleInput}/>
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                    <Form.Label className="white">Password</Form.Label>
+                                    <Form.Control name="password" type="password" placeholder="Password" value={signUpData.password} onChange={handleInput}/>
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                    <Form.Label className="white">Email address</Form.Label>
+                                    <Form.Control name="email" type="email" placeholder="Enter email" value={signUpData.email} onChange={handleInput}/>
+                                    <Form.Text className="text-muted">
+                                        We'll never share your email with anyone else.
+                                    </Form.Text>
+                                </Form.Group>
+                                <div className="d-flex justify-content-md-center">
+                                    <Button variant="primary" type="submit">
+                                        Register
+                                    </Button>
+                                </div>
+                            </Form>
+                        </div>
                     </Col>
                 </Row>
             </Container>

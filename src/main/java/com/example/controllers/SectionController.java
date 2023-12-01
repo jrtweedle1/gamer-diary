@@ -2,12 +2,7 @@ package com.example.controllers;
 import com.example.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import com.example.models.Section;
 import com.example.repositories.SectionRepository;
@@ -19,6 +14,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class SectionController {
 
@@ -27,6 +23,26 @@ public class SectionController {
 
     @Autowired
     private SectionRepository sectionRepository;
+
+
+    @DeleteMapping("/section/{sectionId}")
+    public ResponseEntity<?> deleteSectionById(@PathVariable String sectionId) {
+        try {
+            Optional<Section> sectionOptional = sectionRepository.findById(sectionId);
+            if (sectionOptional.isPresent()) {
+                sectionRepository.deleteById(sectionId);
+                Section section = sectionOptional.get();
+                Diary diary = diaryRepository.findBySectionId(sectionId);
+                diary.getSections().remove(sectionId);
+                Diary savedDiary = diaryRepository.save(diary);
+                return ResponseEntity.ok(savedDiary);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete diary details");
+        }
+    }
 
     @GetMapping("/section/{sectionId}")
     public ResponseEntity<?> getSectionById(@PathVariable String sectionId) {

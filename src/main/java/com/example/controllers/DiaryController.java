@@ -7,6 +7,7 @@ import com.example.models.Diary;
 import com.example.models.User;
 import com.example.repositories.DiaryRepository;
 import com.example.repositories.UserRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.example.security.JwtUtil;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.bson.types.ObjectId;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class DiaryController {
 
@@ -34,6 +36,25 @@ public class DiaryController {
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch diary details");
+        }
+    }
+
+    @DeleteMapping("/diary/{diaryId}")
+    public ResponseEntity<?> deleteDiaryById(@PathVariable String diaryId) {
+        try {
+            Optional<Diary> diaryOptional = diaryRepository.findById(diaryId);
+            if (diaryOptional.isPresent()) {
+                diaryRepository.deleteById(diaryId);
+                Diary diary = diaryOptional.get();
+                User user = userRepository.findByDiaryId(diaryId);
+                user.getDiaryIds().remove(diaryId);
+                User savedUser = userRepository.save(user);
+                return ResponseEntity.ok(savedUser);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete diary details");
         }
     }
 
