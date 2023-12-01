@@ -35,8 +35,11 @@ QuestLog is a video game diary for gamers to record their progress in various ga
    
 ## Technologies
 What technologies my project uses.
-React with React Router
-React Bootstrap
-Java
-Spring Boot (Maven)
-MongoDB
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Angular][Angular.io]][Angular-url]
+* [![Svelte][Svelte.dev]][Svelte-url]
+* [![Laravel][Laravel.com]][Laravel-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![JQuery][JQuery.com]][JQuery-url]
