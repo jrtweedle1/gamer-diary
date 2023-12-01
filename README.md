@@ -1,5 +1,6 @@
 # QuestLog (Gamer Diary)
 QuestLog is a video game diary for gamers to record their progress in various games. This application was made with gamers in mind who are tired of losing thier progress after putting a game down for a while. It's especially useful for people that play multiple games at a time, take breaks from playing video games, or otherwise would need a way to record progress and notes.
+![http://full/path/to/img.jpg "Optional title"](https://github.com/jrtweedle1/gamer-diary/blob/main/screenshot.png?raw=true)
 
 ## Features
 * Gamer-friendly user interface
